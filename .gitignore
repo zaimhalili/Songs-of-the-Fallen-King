@@ -361,3 +361,51 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+################################################################################
+# Unity-specific entries
+################################################################################
+
+# Unity Library
+/Library/
+
+# Unity generated meta files (should be tracked in git)
+!.gitkeep
+!*.meta
+
+# User-specific Unity Editor preferences
+/UserSettings/
+/ProjectSettings/ProjectSettings.asset
+
+# Unity build directories
+/Build/
+/Builds/
+*.apk
+*.aab
+*.unitypackage
+
+# Unity temporary files
+Temp/
+*.tmp
+
+# Crash dumps
+crash_dump_*
+
+# Compiled binaries
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Platform specific build output
+/[Bb]uild[Ll]og*.txt
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~.nib

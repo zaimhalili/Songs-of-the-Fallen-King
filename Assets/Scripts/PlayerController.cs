@@ -8,40 +8,33 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public float walkSpeed = 5f;
+    public float settleSpeedThreshold = 2.4f;
     Vector2 moveInput;
     private bool _isMoving = false;
-    public bool isMoving 
-    {   
-        get
-        {
-            return _isMoving;
-        }
+
+    public bool isMoving
+    {
+        get { return _isMoving; }
         private set
         {
             _isMoving = value;
-            animator.SetBool("isMoving", value);
-        } 
+            animator.SetBool(AnimationStrings.isMoving, value);
+        }
     }
-    public bool _isFacingRight = true;
-    public bool IsFacingRight 
-    { 
-        get 
-        { 
-            return _isFacingRight; 
-        } 
-        private set 
+
+    public bool _isFacingRight = false;
+    public bool IsFacingRight
+    {
+        get { return _isFacingRight; }
+        private set
         {
-            if(_isFacingRight != value)
+            if (_isFacingRight != value)
             {
-                // Flip
                 transform.localScale *= new Vector2(-1, 1);
             }
             _isFacingRight = value;
-        } 
+        }
     }
-    public bool IsFacingLeft { get; private set; }
-
-    //private bool _isDead = false;
 
     Rigidbody2D rb;
     Animator animator;
@@ -52,39 +45,33 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
-
+        float speed = Mathf.Abs(rb.velocity.x);
+        animator.SetFloat(AnimationStrings.speed, speed, 0.2f, Time.deltaTime);
     }
 
     private void FixedUpdate()
     {
-        rb.velocity = new Vector2(moveInput.x * walkSpeed * Time.fixedDeltaTime, rb.velocity.y);
+        rb.velocity = new Vector2(moveInput.x * walkSpeed, rb.velocity.y);
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
-
         isMoving = moveInput != Vector2.zero;
+        SetFacingDirection(moveInput);
     }
 
     private void SetFacingDirection(Vector2 moveInput)
     {
-        if(moveInput.x > 0 && !IsFacingRight)
+        if (moveInput.x > 0 && !IsFacingRight)
         {
             IsFacingRight = true;
         }
-        else if(moveInput.x < 0 && !IsFacingLeft)
+        else if (moveInput.x < 0 && IsFacingRight)
         {
-            IsFacingLeft = true;
+            IsFacingRight = false;
         }
     }
 }

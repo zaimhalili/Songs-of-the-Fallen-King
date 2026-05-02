@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 5
+  _isFacingRight: 1
 --- !u!50 &1690023309573105473
 Rigidbody2D:
   serializedVersion: 4
